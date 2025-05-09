@@ -109,12 +109,14 @@ const printLayoutHandler = async (req, res) => {
           } else {
             printer.setTextSize(layout.size_font, layout.size_font);
             printer.println(layout.content);
+            printer.setTextNormal();
           }
         }
 
         if (layout.type === "antrian") {
           // Nomor antrian besar
           printer.setTextSize(layout.size_font, layout.size_font);
+          printer.bold();
           printer.println(prefix + nomor);
           console.log(prefix + nomor);
           printer.setTextNormal();
