@@ -1,0 +1,30 @@
+.card {
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  .form-control {
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 6px;
+  }
+  
+  .btn {
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-weight: 500;
+  }
+  
+  .btn-success:hover {
+    background-color: #219653;
+  }
+  
+  .btn-danger:hover {
+    background-color: #b91c1c;
+  }
+  
+  .card-title {
+    font-size: 1.7rem;
+    font-weight: bold;
+  }
+  

@@ -1,0 +1,44 @@
+.card {
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.card-title {
+  font-size: 1.7rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.form-control {
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.form-select {
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.btn {
+  padding: 10px 24px;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.btn-success:hover {
+  background-color: #219653;
+}
+
+.btn-danger:hover {
+  background-color: #b91c1c;
+}
+
+@media (max-width: 768px) {
+  .btn {
+    width: 48%;
+    font-size: 14px;
+  }
+}
