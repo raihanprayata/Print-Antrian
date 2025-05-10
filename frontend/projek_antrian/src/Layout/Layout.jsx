@@ -38,7 +38,7 @@ function Layout() {
       html:
         '<input id="swal-input1" type="number" class="swal2-input" placeholder="Mulai dari nomor">' +
         '<input id="swal-input2" type="number" class="swal2-input" placeholder="Sampai nomor">' +
-        '<input id="swal-input3" type="number" class="swal2-input" placeholder="Format digit">' +
+        '<input id="swal-input3" type="number" class="swal2-input" placeholder="Format digit" value= "1">' +
         '<input id="swal-input4" type="text" class="swal2-input" placeholder="Prefix">',
       focusConfirm: false,
       preConfirm: () => {
