@@ -4,6 +4,8 @@ const path = require("path");
 const sharp = require("sharp");
 const modelLayout = require("../layout/model.js");
 
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 const printLayoutHandler = async (req, res) => {
   const { id_antrian } = req.params;
   const { start, end, format_digit, prefix } = req.body;
@@ -125,6 +127,8 @@ const printLayoutHandler = async (req, res) => {
 
       printer.cut();
       await printer.execute();
+
+      await delay(1000);
     }
 
     return res.json({
