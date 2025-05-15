@@ -35,11 +35,33 @@ function Layout() {
   const handlePrintLayout = async () => {
     const { value: formValues } = await Swal.fire({
       title: "Cetak Layout",
-      html:
-        '<input id="swal-input1" type="number" class="swal2-input" placeholder="Mulai dari nomor">' +
-        '<input id="swal-input2" type="number" class="swal2-input" placeholder="Sampai nomor">' +
-        '<input id="swal-input3" type="number" class="swal2-input" placeholder="Format digit" value= "1">' +
-        '<input id="swal-input4" type="text" class="swal2-input" placeholder="Prefix">',
+      html: `
+      <div style="display: flex; gap: 20px; width: 100%; justify-content: center; align-item: center" class="swal2-form-container">
+        <div style="flex: 1; display: flex; flex-direction: column; gap: 15px;" class="swal2-form-column">
+          <div class="swal2-form-group">
+            <label style="text-align: left; margin-bottom: 5px; font-weight: 500; color: #555; " for="swal-input1">Mulai dari nomor</label>
+            <input id="swal-input1" type="number" style=" width: 75% !important; box-sizing: border-box;" class="swal2-input" placeholder="Contoh: 1">
+          </div>
+          
+          <div class="swal2-form-group">
+            <label style="text-align: left; margin-bottom: 5px; font-weight: 500; color: #555; " for="swal-input2">Sampai nomor</label>
+            <input id="swal-input2" type="number" style=" width: 75% !important; box-sizing: border-box;" class="swal2-input" placeholder="Contoh: 100">
+          </div>
+        </div>
+        
+        <div style="flex: 1; display: flex; flex-direction: column; gap: 15px;" class="swal2-form-column">
+          <div class="swal2-form-group">
+            <label style="text-align: left; margin-bottom: 5px; font-weight: 500; color: #555; " for="swal-input3">Jumlah format digit</label>
+            <input id="swal-input3" type="number" style=" width: 75% !important; box-sizing: border-box;" class="swal2-input" placeholder="Contoh: 3" value="1">
+          </div>
+          
+          <div class="swal2-form-group">
+            <label style="text-align: left; margin-bottom: 5px; font-weight: 500; color: #555; " for="swal-input4">Prefix (opsional)</label>
+            <input   id="swal-input4" type="text" style=" width: 75% !important; box-sizing: border-box;" class="swal2-input" placeholder="Contoh: ANT-">
+          </div>
+        </div>
+      </div>
+    `,
       focusConfirm: false,
       preConfirm: () => {
         return [
