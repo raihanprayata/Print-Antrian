@@ -6,6 +6,7 @@ import EditAntrian from "./Antrian/EditAntrian";
 import Layout from "./Layout/Layout";
 import TambahLayout from "./Layout/TambahLayout";
 import EditLayout from "./Layout/EditLayout";
+import PrintSatuan from "./Layout/PrintSatuan";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/edit_antrian/:id" element={<EditAntrian />} />
           <Route path="/layout/:id_antrian" element={<Layout />} />
           <Route path="/tambah_layout/:id_antrian" element={<TambahLayout />} />
+          <Route path="/print-satuan" element={<PrintSatuan />} />
           <Route path="/edit_layout/:id" element={<EditLayout />} />
         </Routes>
       </div>

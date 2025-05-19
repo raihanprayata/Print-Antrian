@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import "./Layout.css";
+import { Button } from "react-bootstrap";
 
 function Layout() {
   const [layout, setLayout] = useState([]);
@@ -30,6 +31,14 @@ function Layout() {
 
   const handleEdit = (id) => {
     navigate(`/edit_layout/${id}`);
+  };
+
+  const handlePrintSatuan = async () => {
+    try {
+      navigate("/print-satuan");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handlePrintLayout = async () => {
@@ -147,6 +156,15 @@ function Layout() {
           </button>
           <button className="print-btn" onClick={handlePrintLayout}>
             <i className="fas fa-print"></i> Print Layout
+          </button>
+          <button
+            className="print-satuan-btn"
+            style={{ color: "white" }}
+            onClick={() => {
+              handlePrintSatuan();
+            }}
+          >
+            Print Satuan
           </button>
         </div>
       </div>
