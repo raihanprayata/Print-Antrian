@@ -18,7 +18,7 @@ function App() {
           <Route path="/edit_antrian/:id" element={<EditAntrian />} />
           <Route path="/layout/:id_antrian" element={<Layout />} />
           <Route path="/tambah_layout/:id_antrian" element={<TambahLayout />} />
-          <Route path="/print-satuan" element={<PrintSatuan />} />
+          <Route path="/print-satuan/:id_antrian" element={<PrintSatuan />} />
           <Route path="/edit_layout/:id" element={<EditLayout />} />
         </Routes>
       </div>

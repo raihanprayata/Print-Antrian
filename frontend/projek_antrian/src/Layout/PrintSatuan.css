@@ -1,0 +1,29 @@
+.body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: rgb(159, 157, 157);
+}
+
+.print-container {
+  margin: 0;
+  margin-left: 240px;
+  margin-right: 240px;
+  padding: 40px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 15px;
+}
+
+.title-form {
+  font-size: 30px;
+  margin-bottom: 0;
+}
+
+.label-description {
+  padding-top: 10px;
+}
+
+.border-button {
+  padding-top: 10px;
+}

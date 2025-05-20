@@ -5,10 +5,6 @@ import Swal from "sweetalert2";
 import "./Layout.css";
 
 function Layout() {
-  const [lastStart, setLastStart] = useState(0); // default awal
-  const [lastFormatDigit, setLastFormatDigit] = useState(1);
-  const [lastPrefix, setLastPrefix] = useState("");
-
   const [layout, setLayout] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -36,72 +32,8 @@ function Layout() {
     navigate(`/edit_layout/${id}`);
   };
 
-  // const handlePrintSatuan = async () => {
-  //   try {
-  //     navigate("/print-satuan");
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  const handlePrintSatuan = async () => {
-    const { value: formValues } = await Swal.fire({
-      title: "Cetak Layout Satuan",
-      html: `
-      <div style="margin-top: 10px;">
-        <label for="swal-input1">Mulai dari nomor</label><br/>
-        <input id="swal-input1" type="number" class="swal2-input" placeholder="Contoh: 1" value="0">
-      </div>
-      <div style="margin-top: 10px;">
-        <label for="swal-input2">Jumlah format digit</label><br/>
-        <input id="swal-input2" type="number" class="swal2-input" placeholder="Contoh: 3" value="1">
-      </div>
-      <div style="margin-top: 10px;">
-        <label for="swal-input3">Prefix (opsional)</label><br/>
-        <input id="swal-input3" type="text" class="swal2-input" placeholder="Contoh: ANT-">
-      </div>
-    `,
-      focusConfirm: false,
-      preConfirm: () => {
-        return [
-          document.getElementById("swal-input1").value,
-          document.getElementById("swal-input2").value,
-          document.getElementById("swal-input3").value,
-        ];
-      },
-      didOpen: () => {
-        // Isi ulang value secara dinamis saat open modal
-        document.getElementById("swal-input1").value = lastStart;
-        document.getElementById("swal-input2").value = lastFormatDigit;
-        document.getElementById("swal-input3").value = lastPrefix;
-      },
-    });
-
-    if (formValues) {
-      try {
-        const [start, format_digit, prefix] = formValues;
-        const parsedStart = parseInt(start);
-
-        const response = await axios.post(
-          `http://localhost:3000/api/printSatuan/${id_antrian}`,
-          {
-            start: parsedStart,
-            format_digit: parseInt(format_digit),
-            prefix: prefix,
-          }
-        );
-
-        // Update nilai lastStart jadi start + 1
-        setLastStart(parsedStart + 1);
-        setLastFormatDigit(parseInt(format_digit));
-        setLastPrefix(prefix);
-
-        Swal.fire("Sukses", response.data.message, "success");
-      } catch (error) {
-        console.error(error);
-        Swal.fire("Gagal", "Terjadi kesalahan saat mencetak.", "error");
-      }
-    }
+  const handlePrintSatuan = (id) => {
+    navigate(`/print-satuan/${id}`);
   };
 
   const handlePrintLayout = async () => {
@@ -223,9 +155,7 @@ function Layout() {
           <button
             className="print-satuan-btn"
             style={{ color: "white" }}
-            onClick={() => {
-              handlePrintSatuan();
-            }}
+            onClick={() => handlePrintSatuan(id_antrian)}
           >
             Print Satuan
           </button>
