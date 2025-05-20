@@ -33,7 +33,9 @@ function Antrian() {
     if (!confirmDelete) return;
 
     try {
-      const response = await axios.delete(`http://localhost:3000/api/antrian/${id}`);
+      const response = await axios.delete(
+        `http://localhost:3000/api/antrian/${id}`
+      );
       alert(response.data.message);
       fetchData(); // Refresh data
     } catch (error) {
@@ -71,25 +73,51 @@ function Antrian() {
           <table className="antrian-table">
             <thead>
               <tr>
-                <th>No</th>
-                <th>Nama Antrian</th>
-                <th>Aksi</th>
+                <th className="th-no" style={{ textAlign: "center" }}>
+                  No
+                </th>
+                <th className="th-name" style={{ textAlign: "center" }}>
+                  Nama Antrian
+                </th>
+                <th className="th-aksi" style={{ textAlign: "center" }}>
+                  Aksi
+                </th>
               </tr>
             </thead>
             <tbody>
               {antrian.length > 0 ? (
                 antrian.map((item, index) => (
                   <tr key={item.id}>
-                    <td>{index + 1}</td>
-                    <td>{item.nama_antrian}</td>
-                    <td className="action-buttons">
-                      <button className="layout-btn" onClick={() => handleLayout(item.id)}>
+                    <td className="tb-no" style={{ textAlign: "center" }}>
+                      {index + 1}
+                    </td>
+                    <td className="tb-name" style={{ textAlign: "center" }}>
+                      {item.nama_antrian}
+                    </td>
+                    <td
+                      className="action-buttons"
+                      style={{
+                        textAlign: "center",
+                        alignItems: "center",
+                        alignContent: "center",
+                      }}
+                    >
+                      <button
+                        className="layout-btn"
+                        onClick={() => handleLayout(item.id)}
+                      >
                         <i className="fas fa-th-large"></i> Layout
                       </button>
-                      <button className="edit-btn" onClick={() => handleEdit(item.id)}>
+                      <button
+                        className="edit-btn"
+                        onClick={() => handleEdit(item.id)}
+                      >
                         <i className="fas fa-edit"></i> Edit
                       </button>
-                      <button className="delete-btn" onClick={() => handleDelete(item.id)}>
+                      <button
+                        className="delete-btn"
+                        onClick={() => handleDelete(item.id)}
+                      >
                         <i className="fas fa-trash"></i> Hapus
                       </button>
                     </td>

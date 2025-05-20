@@ -3,7 +3,7 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 30px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .header-section {
@@ -34,13 +34,13 @@
   align-items: center;
   gap: 8px;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .add-btn:hover {
   background-color: #2980b9;
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .plus-icon {
@@ -49,7 +49,7 @@
 
 .table-responsive {
   overflow-x: auto;
-  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
 }
 
@@ -84,7 +84,8 @@
   gap: 10px;
 }
 
-.edit-btn, .delete-btn {
+.edit-btn,
+.delete-btn {
   padding: 8px 15px;
   border: none;
   border-radius: 5px;
@@ -160,19 +161,47 @@
   align-items: center;
   gap: 8px;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .layout-btn:hover {
   background-color: #27ae60;
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
+.th-no {
+  width: 5%;
+  text-align: center;
+}
+
+.th-name {
+  width: 50%;
+  text-align: center;
+}
+
+.th-aksi {
+  width: 45%;
+  text-align: center;
+}
+
+.tb-no {
+  width: 5%;
+  text-align: center;
+}
+
+.tb-name {
+  width: 50%;
+  text-align: center;
+}
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Responsive */
@@ -180,23 +209,27 @@
   .antrian-container {
     padding: 20px;
   }
-  
+
   .header-section {
     flex-direction: column;
     align-items: flex-start;
   }
-  
+
   .antrian-table th,
   .antrian-table td {
     padding: 10px 12px;
   }
-  
+
   .action-buttons {
+    display: flex;
     flex-direction: column;
-    gap: 5px;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
   }
-  
-  .edit-btn, .delete-btn {
+
+  .edit-btn,
+  .delete-btn {
     width: 100%;
     justify-content: center;
   }
