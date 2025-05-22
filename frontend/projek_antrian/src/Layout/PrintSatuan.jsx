@@ -1,83 +1,78 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import axios from "axios";
 import Swal from "sweetalert2";
 import "./PrintSatuan.css";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 const PrintSatuan = () => {
   const { id_antrian } = useParams();
-  const [start, setStart] = useState(0);
-  const [formatDigit, setFormatDigit] = useState(1);
-  const [prefix, setPrefix] = useState("");
+  const location = useLocation();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const [dataDetail, setDataDetail] = useState([]);
 
+  // Ambil query params
+  const queryParams = new URLSearchParams(location.search);
+  const start = queryParams.get("start");
+  const format = queryParams.get("format");
+  const prefix = queryParams.get("prefix");
+
+  const getData = async () => {
     try {
-      const response = await axios.post(
-        `http://localhost:3000/api/printSatuan/${id_antrian}`,
-        {
-          start: parseInt(start),
-          format_digit: parseInt(formatDigit),
-          prefix: prefix,
-        }
+      const response = await axios.get(
+        `http://localhost:3000/api/layout/antrian/${id_antrian}`
       );
-
-      // Auto-increment start untuk kenyamanan input berikutnya
-      setStart((prev) => parseInt(prev) + 1);
-
-      Swal.fire("Sukses", response.data.message, "success");
+      setDataDetail(response.data.data);
+      console.log(response.data.data);
     } catch (error) {
-      console.error(error);
-      Swal.fire("Gagal", "Terjadi kesalahan saat mencetak.", "error");
+      alert("Gagal memproses data");
+      console.log(error);
     }
   };
+
+  const handlePrint = async () => {
+    try {
+      const response = await axios.post(
+        `http://localhost:3000/api/print/${id_antrian}`,
+        { start: start, format_digit: format, prefix: prefix }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <div className="body">
       <Container className="print-container">
-        <div className="text-center">
-          <h4 className="title-form">Print Satuan</h4>
-          <p>( Halaman untuk print satu layout )</p>
-        </div>
-        <div>
-          <Form className="form" onSubmit={handleSubmit}>
-            <Form.Label className="label-name">Mulai Dari</Form.Label>
-            <Form.Control
-              type="number"
-              value={start}
-              onChange={(e) => setStart(e.target.value)}
-              placeholder="Contoh: 0"
-            />
-
-            <Form.Label className="label-name">Format Digit</Form.Label>
-            <Form.Control
-              type="number"
-              value={formatDigit}
-              onChange={(e) => setFormatDigit(e.target.value)}
-              placeholder="Contoh: 3"
-            />
-
-            <Form.Label className="label-name">Prefix (Opsional)</Form.Label>
-            <Form.Control
-              type="text"
-              value={prefix}
-              onChange={(e) => setPrefix(e.target.value)}
-              placeholder="Contoh: ANT-"
-            />
-
-            <div className="border-button">
-              <Button
-                type="submit"
-                className="btn-success"
-                style={{ fontWeight: "bold" }}
-              >
-                Submit
-              </Button>
-            </div>
-          </Form>
-        </div>
+        {
+          <div className="text-center">
+            <h4 className="title mt-4">
+              {
+                dataDetail.find(
+                  (item) => item.type === "text" && item.nama === "Judul"
+                )?.content
+              }
+            </h4>
+            {dataDetail
+              .filter((item) => item.type === "text" && item.nama !== "Judul")
+              .map((item, index) => (
+                <h5 key={index} className="sub-title mt-2">
+                  {item.content}
+                </h5>
+              ))}
+            <h1 className="no-antrian mt-4">
+              {prefix}
+              {start}
+            </h1>
+            <Button className="btn-print mt-5" onClick={handlePrint}>
+              Print
+            </Button>
+          </div>
+        }
       </Container>
     </div>
   );

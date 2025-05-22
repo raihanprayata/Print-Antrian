@@ -4,6 +4,7 @@
   align-items: center;
   height: 100vh;
   background-color: rgb(159, 157, 157);
+  font-family: "Poppins", sans-serif;
 }
 
 .print-container {
@@ -13,11 +14,27 @@
   padding: 40px;
   background-color: rgb(255, 255, 255);
   border-radius: 15px;
+  height: 500px;
 }
 
-.title-form {
-  font-size: 30px;
+.title {
+  font-size: 45px;
+  font-weight: normal;
   margin-bottom: 0;
+}
+
+.sub-title {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.no-antrian {
+  font-size: 120px;
+}
+
+.btn-print {
+  width: 40%;
+  font-size: 20px;
 }
 
 .label-description {

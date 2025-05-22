@@ -128,7 +128,7 @@ const printLayoutHandler = async (req, res) => {
       printer.cut();
       await printer.execute();
 
-      await delay(1000);
+      await delay(5000);
     }
 
     return res.json({

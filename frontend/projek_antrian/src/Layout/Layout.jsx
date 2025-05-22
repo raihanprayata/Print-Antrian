@@ -7,6 +7,11 @@ import "./Layout.css";
 function Layout() {
   const [layout, setLayout] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const [start, setStart] = useState(0); // nilai awal nomor cetak
+  const [format_digit, setFormatDigit] = useState(1); // jumlah digit atau sampai nomor
+  const [prefix, setPrefix] = useState(""); // prefix opsional
+
   const navigate = useNavigate();
   const { id_antrian } = useParams();
 
@@ -32,38 +37,90 @@ function Layout() {
     navigate(`/edit_layout/${id}`);
   };
 
-  const handlePrintSatuan = (id) => {
-    navigate(`/print-satuan/${id}`);
+  // const handlePrintSatuan = (id) => {
+  //   navigate(`/print-satuan/${id}`);
+  // };
+  const handlePrintSatuan = async () => {
+    const { value: formValues } = await Swal.fire({
+      title: "Pengaturan Nomor Antrian",
+      html: `
+      <div>
+        <label for="swal-input1">Mulai dari nomor</label>
+        <input id="swal-input1" type="number" class="swal2-input" value="${start}" placeholder="Contoh: 1">
+        
+        <label for="swal-input2">Jumlah yang dicetak</label>
+        <input id="swal-input2" type="number" class="swal2-input" value="${format_digit}" placeholder="Contoh: 10">
+        
+        <label for="swal-input3">Prefix (opsional)</label>
+        <input id="swal-input3" type="text" class="swal2-input" value="${prefix}" placeholder="Contoh: A">
+      </div>
+    `,
+      focusConfirm: false,
+      showCancelButton: true,
+      confirmButtonText: "Cetak",
+      cancelButtonText: "Batal",
+      preConfirm: () => {
+        const inputStart = document.getElementById("swal-input1").value;
+        const inputFormat = document.getElementById("swal-input2").value;
+        const inputPrefix = document.getElementById("swal-input3").value;
+
+        if (!inputStart || !inputFormat) {
+          Swal.showValidationMessage("Nomor mulai dan jumlah harus diisi");
+          return false;
+        }
+
+        return [inputStart, inputFormat, inputPrefix];
+      },
+    });
+
+    if (formValues) {
+      const [inputStart, inputFormat, inputPrefix] = formValues;
+
+      navigate(
+        `/print-satuan/${id_antrian}?start=${inputStart}&format=${inputFormat}&prefix=${inputPrefix}`
+      );
+    }
   };
 
   const handlePrintLayout = async () => {
     const { value: formValues } = await Swal.fire({
       title: "Cetak Layout",
       html: `
-      <div style="display: flex; gap: 20px; width: 100%; justify-content: center; align-item: center" class="swal2-form-container">
-        <div style="flex: 1; display: flex; flex-direction: column; gap: 15px;" class="swal2-form-column">
-          <div class="swal2-form-group">
-            <label style="text-align: left; margin-bottom: 5px; font-weight: 500; color: #555; " for="swal-input1">Mulai dari nomor</label>
-            <input id="swal-input1" type="number" style=" width: 75% !important; box-sizing: border-box;" class="swal2-input" placeholder="Contoh: 1">
+      <div style="display: flex; flex-direction: column; gap: 20px; width: 100%;" class="swal2-form-container">
+
+        <!-- Baris 1: Dua Kolom -->
+        <div style="display: flex; gap: 20px; width: 100%; justify-content: center; align-item: center">
+          <!-- Kolom Kiri -->
+          <div style="flex: 1; display: flex; flex-direction: column; gap: 15px;">
+            <div class="swal2-form-group">
+              <label for="swal-input1" style="margin-bottom: 5px; font-weight: 500; color: #555;">Mulai dari nomor</label>
+              <input id="swal-input1" type="number" style="width: 150px; box-sizing: border-box;" class="swal2-input" placeholder="Contoh: 1">
+            </div>
+            <div class="swal2-form-group">
+              <label for="swal-input2" style="margin-bottom: 5px; font-weight: 500; color: #555;">Sampai nomor</label>
+              <input id="swal-input2" type="number" style="width: 150px; box-sizing: border-box;" class="swal2-input" placeholder="Contoh: 100">
+            </div>
           </div>
-          
-          <div class="swal2-form-group">
-            <label style="text-align: left; margin-bottom: 5px; font-weight: 500; color: #555; " for="swal-input2">Sampai nomor</label>
-            <input id="swal-input2" type="number" style=" width: 75% !important; box-sizing: border-box;" class="swal2-input" placeholder="Contoh: 100">
+
+          <!-- Kolom Kanan -->
+          <div style="flex: 1; display: flex; flex-direction: column; gap: 15px;">
+            <div class="swal2-form-group">
+              <label for="swal-input3" style="margin-bottom: 5px; font-weight: 500; color: #555;">Jumlah format digit</label>
+              <input id="swal-input3" type="number" style="width: 150px; box-sizing: border-box;" class="swal2-input" placeholder="Contoh: 3" value="1">
+            </div>
+            <div class="swal2-form-group">
+              <label for="swal-input4" style="margin-bottom: 5px; font-weight: 500; color: #555;">Prefix (opsional)</label>
+              <input id="swal-input4" type="text" style="width: 150px; box-sizing: border-box;" class="swal2-input" placeholder="Contoh: ANT-">
+            </div>
           </div>
         </div>
-        
-        <div style="flex: 1; display: flex; flex-direction: column; gap: 15px;" class="swal2-form-column">
-          <div class="swal2-form-group">
-            <label style="text-align: left; margin-bottom: 5px; font-weight: 500; color: #555; " for="swal-input3">Jumlah format digit</label>
-            <input id="swal-input3" type="number" style=" width: 75% !important; box-sizing: border-box;" class="swal2-input" placeholder="Contoh: 3" value="1">
-          </div>
-          
-          <div class="swal2-form-group">
-            <label style="text-align: left; margin-bottom: 5px; font-weight: 500; color: #555; " for="swal-input4">Prefix (opsional)</label>
-            <input   id="swal-input4" type="text" style=" width: 75% !important; box-sizing: border-box;" class="swal2-input" placeholder="Contoh: ANT-">
-          </div>
+
+        <!-- Baris 2: Delay (Full Width) -->
+        <div class="swal2-form-group">
+          <label for="swal-input5" style="margin-bottom: 5px; font-weight: 500; color: #555;">Delay (milliseconds)</label>
+          <input id="swal-input5" type="number" style="width: 300px; box-sizing: border-box;" class="swal2-input" placeholder="Contoh: 500" value="1000">
         </div>
+
       </div>
     `,
       focusConfirm: false,
@@ -73,13 +130,14 @@ function Layout() {
           document.getElementById("swal-input2").value,
           document.getElementById("swal-input3").value,
           document.getElementById("swal-input4").value,
+          document.getElementById("swal-input5").value,
         ];
       },
     });
 
     if (formValues) {
       try {
-        const [start, end, format_digit, prefix] = formValues;
+        const [start, end, format_digit, prefix, delay] = formValues;
         const response = await axios.post(
           `http://localhost:3000/api/print/${id_antrian}`,
           {
@@ -87,6 +145,7 @@ function Layout() {
             end: parseInt(end),
             format_digit: parseInt(format_digit),
             prefix: prefix,
+            delay: delay,
           }
         );
         Swal.fire("Sukses", response.data.message, "success");
