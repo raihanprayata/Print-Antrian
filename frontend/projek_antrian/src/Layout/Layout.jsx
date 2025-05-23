@@ -41,45 +41,7 @@ function Layout() {
   //   navigate(`/print-satuan/${id}`);
   // };
   const handlePrintSatuan = async () => {
-    const { value: formValues } = await Swal.fire({
-      title: "Pengaturan Nomor Antrian",
-      html: `
-      <div>
-        <label for="swal-input1">Mulai dari nomor</label>
-        <input id="swal-input1" type="number" class="swal2-input" value="${start}" placeholder="Contoh: 1">
-        
-        <label for="swal-input2">Jumlah yang dicetak</label>
-        <input id="swal-input2" type="number" class="swal2-input" value="${format_digit}" placeholder="Contoh: 10">
-        
-        <label for="swal-input3">Prefix (opsional)</label>
-        <input id="swal-input3" type="text" class="swal2-input" value="${prefix}" placeholder="Contoh: A">
-      </div>
-    `,
-      focusConfirm: false,
-      showCancelButton: true,
-      confirmButtonText: "Cetak",
-      cancelButtonText: "Batal",
-      preConfirm: () => {
-        const inputStart = document.getElementById("swal-input1").value;
-        const inputFormat = document.getElementById("swal-input2").value;
-        const inputPrefix = document.getElementById("swal-input3").value;
-
-        if (!inputStart || !inputFormat) {
-          Swal.showValidationMessage("Nomor mulai dan jumlah harus diisi");
-          return false;
-        }
-
-        return [inputStart, inputFormat, inputPrefix];
-      },
-    });
-
-    if (formValues) {
-      const [inputStart, inputFormat, inputPrefix] = formValues;
-
-      navigate(
-        `/print-satuan/${id_antrian}?start=${inputStart}&format=${inputFormat}&prefix=${inputPrefix}`
-      );
-    }
+    navigate(`/print-satuan/${id_antrian}`);
   };
 
   const handlePrintLayout = async () => {
