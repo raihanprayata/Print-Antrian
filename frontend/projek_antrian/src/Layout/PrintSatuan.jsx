@@ -13,7 +13,7 @@ const PrintSatuan = () => {
 
   // Ambil query params
   const queryParams = new URLSearchParams(location.search);
-  const start = queryParams.get("start");
+  const [start, setStart] = useState(Number(queryParams.get("start")) || 0);
   const format = queryParams.get("format");
   const prefix = queryParams.get("prefix");
 
@@ -30,12 +30,35 @@ const PrintSatuan = () => {
     }
   };
 
+  console.log("start:", start, "format:", format, "prefix:", prefix);
+
   const handlePrint = async () => {
     try {
+      console.log("Kirim data POST:", {
+        start: Number(start),
+        format_digit: Number(format),
+        prefix: prefix,
+      });
+
+      // if (!start || !format || isNaN(Number(start)) || isNaN(Number(format))) {
+      //   return alert(
+      //     "Data tidak valid: pastikan 'start' dan 'format' berupa angka."
+      //   );
+      // }
+
       const response = await axios.post(
-        `http://localhost:3000/api/print/${id_antrian}`,
-        { start: start, format_digit: format, prefix: prefix }
+        `http://localhost:3000/api/printSatuan/${id_antrian}`,
+        {
+          start: Number(start),
+          format_digit: Number(format),
+          prefix: prefix,
+        }
       );
+
+      console.log(start, format, prefix);
+      console.log(response.data.data);
+
+      setStart(start + 1);
     } catch (error) {
       console.log(error);
     }
@@ -60,7 +83,7 @@ const PrintSatuan = () => {
             {dataDetail
               .filter((item) => item.type === "text" && item.nama !== "Judul")
               .map((item, index) => (
-                <h5 key={index} className="sub-title mt-2">
+                <h5 key={index} className="sub-title mt-3">
                   {item.content}
                 </h5>
               ))}
