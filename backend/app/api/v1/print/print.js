@@ -8,14 +8,20 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const printLayoutHandler = async (req, res) => {
   const { id_antrian } = req.params;
-  const { start, end, format_digit, prefix } = req.body;
+  const { start, end, format_digit, prefix, delayMs } = req.body;
 
   try {
     const startNumber = Number(start);
     const endNumber = Number(end);
     const formatDigit = Number(format_digit);
+    const delayMiliSecond = Number(delayMs);
 
-    if (isNaN(startNumber) || isNaN(endNumber) || isNaN(formatDigit)) {
+    if (
+      isNaN(startNumber) ||
+      isNaN(endNumber) ||
+      isNaN(formatDigit) ||
+      isNaN(delayMiliSecond)
+    ) {
       return res
         .status(400)
         .json({ message: "Range angka atau format digit tidak valid." });
@@ -128,7 +134,7 @@ const printLayoutHandler = async (req, res) => {
       printer.cut();
       await printer.execute();
 
-      await delay(5000);
+      await delay(delayMiliSecond);
     }
 
     return res.json({

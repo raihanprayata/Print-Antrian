@@ -137,7 +137,7 @@ function Layout() {
 
     if (formValues) {
       try {
-        const [start, end, format_digit, prefix, delay] = formValues;
+        const [start, end, format_digit, prefix, delayMs] = formValues;
         const response = await axios.post(
           `http://localhost:3000/api/print/${id_antrian}`,
           {
@@ -145,7 +145,7 @@ function Layout() {
             end: parseInt(end),
             format_digit: parseInt(format_digit),
             prefix: prefix,
-            delay: delay,
+            delayMs: parseInt(delayMs),
           }
         );
         Swal.fire("Sukses", response.data.message, "success");
